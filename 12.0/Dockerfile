@@ -1,5 +1,5 @@
 FROM debian:buster-slim
-MAINTAINER Odoo S.A. <info@odoo.com>
+LABEL maintainer="Odoo S.A. <info@odoo.com>"
 
 SHELL ["/bin/bash", "-xo", "pipefail", "-c"]
 
@@ -72,7 +72,10 @@ RUN chown odoo /etc/odoo/odoo.conf \
     && mkdir -p /mnt/extra-addons \
     && chown -R odoo /mnt/extra-addons \
     && mkdir -p /mnt/odoo-backups \
-    && chown -R odoo /mnt/odoo-backups
+    && chown -R odoo /mnt/odoo-backups \
+    && groupadd 1000 \
+    && usermod -aG 1000 odoo
+
 VOLUME ["/var/lib/odoo", "/mnt/extra-addons"]
 
 # Expose Odoo services
